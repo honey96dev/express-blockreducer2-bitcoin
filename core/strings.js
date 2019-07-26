@@ -20,4 +20,6 @@ module.exports = {
     failedDueToUnknownServerError: 'Failed due to unknown server error',
     invalidParameters: 'Invalid parameters',
     invitationCodeIsInvalid: 'Invitation code is invalid',
+    binSizeIsInvalid: 'BinSize is invalid',
+    timezoneIsInvalid: 'Timezone is invalid',
 };

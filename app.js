@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import expressJwt from 'express-jwt';
 import cors from 'cors';
+import compression from 'compression';
 import {server, session} from './core/config';
 
 import apiRouter from './routes/api';
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(cors());
+app.use(compression());
 
 // app.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
@@ -35,9 +37,9 @@ app.use('/api', expressJwt({secret: session.secret})
         path: [
             '/api/auth/sign-in',
             '/api/auth/sign-up',
-            /\/api\/fft\/calculated\/*/,
-            /\/api\/fft\/id0\/*/,
-            /\/api\/fft\/id0_collection\/*/,
+            /\/api\/market-sentiment\/one\/*/,
+            /\/api\/market-sentiment\/collection\/*/,
+            /\/api\/deribit\/data\/*/,
         ]
     }));
 

@@ -37,6 +37,11 @@ module.exports = {
         fft5m: 'fft_5m',
         fft1h: 'fft_1h',
 
+        id0: 'id0',
+        id0_1m: 'id0_1m',
+        id0_5m: 'id0_5m',
+        id0_1h: 'id0_1h',
+
         tradesBuffer: 'trades_buffer',
         volume: 'volume',
         volume1m: 'volume_1m',
@@ -53,10 +58,16 @@ module.exports = {
 
         deribitInstruments: 'deribit_instruments',
         deribitInstruments2: 'deribit_instruments2',
+
+        cryptoMarkets: 'crypto_markets',
     },
 
     chart: {
         rowCount1: 750,
-        rowCount2: 1500,
+        rowCount2: 1000,
+        rowCount3: 1250,
+        rowCount4: 1500,
+        rowCount5: 1750,
+        rowCount6: 2000,
     }
 };

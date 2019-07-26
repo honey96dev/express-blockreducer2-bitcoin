@@ -2,11 +2,14 @@ import app from '../app';
 import debugLib from 'debug';
 import http from 'http';
 import cluster from 'cluster';
+import SocketIO from 'socket.io';
 import {server} from '../core/config';
+import {setIOServer as setIOServer4MarketInfo} from '../routes/api/exchangeInfo';
 
 let debug;
 let port;
 let httpServer;
+let io;
 
 if (cluster.isMaster) {
     cluster.fork();
@@ -21,6 +24,9 @@ if (cluster.isWorker) {
 
     app.set('port', port);
     httpServer = http.createServer(app);
+
+    io = SocketIO(httpServer);
+    setIOServer4MarketInfo(io);
 
     httpServer.listen(port);
     httpServer.on('error', onError);
