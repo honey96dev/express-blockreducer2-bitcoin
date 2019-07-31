@@ -6,6 +6,7 @@ import volatilityRouter from './api/volatility';
 import marketSentimentRouter from './api/marketSentiment';
 import exchangeInfoRouter from './api/exchangeInfo';
 import deribitRouter from './api/deribit';
+import settingsRouter from './api/settings';
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use('/volatility', volatilityRouter);
 router.use('/market-sentiment', marketSentimentRouter);
 router.use('/exchange-info', exchangeInfoRouter);
 router.use('/deribit', deribitRouter);
+router.use('/settings', settingsRouter);
 
 module.exports = router;
