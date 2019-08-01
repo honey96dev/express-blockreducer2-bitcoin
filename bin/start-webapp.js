@@ -5,6 +5,7 @@ import cluster from 'cluster';
 import SocketIO from 'socket.io';
 import {server} from '../core/config';
 import {setIOServer as setIOServer4MarketInfo} from '../routes/api/exchangeInfo';
+import socketIOService from '../service/socket.io-service';
 
 let debug;
 let port;
@@ -27,6 +28,7 @@ if (cluster.isWorker) {
 
     io = SocketIO(httpServer);
     setIOServer4MarketInfo(io);
+    socketIOService.initSocketIOServer(io);
 
     httpServer.listen(port);
     httpServer.on('error', onError);

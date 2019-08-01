@@ -8,6 +8,8 @@ import exchangeInfoRouter from './api/exchangeInfo';
 import deribitRouter from './api/deribit';
 import settingsRouter from './api/settings';
 
+import adminRouter from './api/admin';
+
 const router = express.Router();
 
 router.use('/', indexRouter);
@@ -18,5 +20,7 @@ router.use('/market-sentiment', marketSentimentRouter);
 router.use('/exchange-info', exchangeInfoRouter);
 router.use('/deribit', deribitRouter);
 router.use('/settings', settingsRouter);
+
+router.use('/admin', adminRouter);
 
 module.exports = router;

@@ -22,4 +22,5 @@ module.exports = {
     invitationCodeIsInvalid: 'Invitation code is invalid',
     binSizeIsInvalid: 'BinSize is invalid',
     timezoneIsInvalid: 'Timezone is invalid',
+    thisEmailIsAlreadyUsed: 'This email is already used',
 };

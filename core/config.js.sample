@@ -11,6 +11,7 @@ module.exports = {
         // sslCert: './sslcert/localhost.cert',
         // sslCA: './sslcert/alphasslrootcabundle.crt',
         environment: 'development',
+        invitationCode: '23900',
     },
     mysql: {
         connectionLimit: 10,

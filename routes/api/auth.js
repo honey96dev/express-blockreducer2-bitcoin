@@ -2,7 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import Q from 'q';
 import {sprintf} from 'sprintf-js';
-import {session, dbTblName} from '../../core/config';
+import {server, session, dbTblName} from '../../core/config';
 import dbConn from '../../core/dbConn';
 import myCrypto from '../../core/myCrypto';
 import strings from '../../core/strings';
@@ -72,7 +72,7 @@ const signUpProc = (req, res, next) => {
     const password = params.password;
     const invitationCode = params.invitationCode;
 
-    if (invitationCode != '23900') {
+    if (invitationCode != server.invitationCode) {
         res.status(200).send({
             result: strings.error,
             message: strings.invitationCodeIsInvalid,
