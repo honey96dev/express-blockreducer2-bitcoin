@@ -33,7 +33,7 @@ const signInProc = (req, res, next) => {
         }
 
         const hash = myCrypto.hmacHex(password);
-        sql = sprintf("SELECT * FROM `%s` WHERE BINARY `email` = '%s' AND BINARY `hash` = '%s';", dbTblName.users, email, hash);
+        sql = sprintf("SELECT U.*, S.symbol FROM `%s` U LEFT JOIN `%s` S ON S.userId = U.id WHERE BINARY U.email = '%s' AND BINARY U.hash = '%s';", dbTblName.users, dbTblName.settings, email, hash);
         dbConn.query(sql, null, (error, rows, fields) => {
             if (error) {
                 console.error('auth/sign-in', JSON.stringify(error));

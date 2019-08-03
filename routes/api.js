@@ -1,6 +1,7 @@
 import express from 'express';
 import indexRouter from './api/index';
 import authRouter from './api/auth';
+import dashboardRouter from './api/dashboard';
 import generalRouter from './api/general';
 import volatilityRouter from './api/volatility';
 import marketSentimentRouter from './api/marketSentiment';
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.use('/', indexRouter);
 router.use('/auth', authRouter);
+router.use('/dashboard', dashboardRouter);
 router.use('/general', generalRouter);
 router.use('/volatility', volatilityRouter);
 router.use('/market-sentiment', marketSentimentRouter);

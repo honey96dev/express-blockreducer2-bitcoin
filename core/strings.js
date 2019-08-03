@@ -23,4 +23,5 @@ module.exports = {
     binSizeIsInvalid: 'BinSize is invalid',
     timezoneIsInvalid: 'Timezone is invalid',
     thisEmailIsAlreadyUsed: 'This email is already used',
+    symbolIsInvalid: 'Symbol is invalid',
 };
