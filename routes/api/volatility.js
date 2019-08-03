@@ -40,7 +40,7 @@ const realProc = (req, res, next) => {
     startTime = new Date(startTime).toISOString();
     endTime = new Date(endTime).toISOString();
 
-    let sql = sprintf("SELECT COUNT(`timestamp`) `cnt` FROM `%s_%s` WHERE `symbol` = '%s' AND `timestamp` BETWEEN '%s' AND '%s';", dbTblName.fft, binSize, symbol, startTime, endTime);
+    let sql = sprintf("SELECT COUNT(`timestamp`) `cnt` FROM `%s_%s_%s` WHERE `timestamp` BETWEEN '%s' AND '%s';", dbTblName.fft, symbol, binSize, startTime, endTime);
     dbConn.query(sql, undefined, (error, results, fields) => {
         if (error) {
             console.error(error);
@@ -54,7 +54,7 @@ const realProc = (req, res, next) => {
         const timestampFormat = "%Y-%m-%dT%H:%i:%s.000Z";
 
         let step = parseInt(results[0]['cnt']) / chart.rowCount1;
-        sql = sprintf("SELECT `timestamp`, AVG(`open`) `open`, AVG(`lowPass`) `lowPass`, AVG(`highPass`) `highPass` FROM (SELECT FLOOR((@row_number:=@row_number + 1)/%f) AS num, `timestamp`, `open`, `lowPass`, `highPass` FROM (SELECT `timestamp`, `open`, `lowPass`, `highPass` FROM `%s_%s` WHERE `symbol` = '%s' AND `timestamp` BETWEEN '%s' AND '%s'  ORDER BY `timestamp`) `bd`, (SELECT @row_number:=0) `row_num`  ORDER BY `timestamp` ASC) `tmp` GROUP BY `num`;", step, dbTblName.fft, binSize, symbol, startTime, endTime);
+        sql = sprintf("SELECT `timestamp`, AVG(`open`) `open`, AVG(`lowPass`) `lowPass`, AVG(`highPass`) `highPass` FROM (SELECT FLOOR((@row_number:=@row_number + 1)/%f) AS num, `timestamp`, `open`, `lowPass`, `highPass` FROM (SELECT `timestamp`, `open`, `lowPass`, `highPass` FROM `%s_%s_%s` WHERE `timestamp` BETWEEN '%s' AND '%s'  ORDER BY `timestamp`) `bd`, (SELECT @row_number:=0) `row_num`  ORDER BY `timestamp` ASC) `tmp` GROUP BY `num`;", step, dbTblName.fft, symbol, binSize, startTime, endTime);
         dbConn.query(sql, null, (error, results, fields) => {
             if (error) {
                 console.log(error);
