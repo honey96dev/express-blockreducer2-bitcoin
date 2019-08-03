@@ -301,7 +301,7 @@ const ohlcProc = (req, res, next) => {
     startTime = new Date(startTime).toISOString();
     endTime = new Date(endTime).toISOString();
 
-    let sql = sprintf("SELECT COUNT(`timestamp`) `count` FROM `%s_%s` WHERE `symbol` = '%s' AND `timestamp` BETWEEN '%s' AND '%s';", dbTblName.tradeBucketed, binSize, symbol, startTime, endTime);
+    let sql = sprintf("SELECT COUNT(`timestamp`) `count` FROM `%s_%s_%s` WHERE `timestamp` BETWEEN '%s' AND '%s';", dbTblName.tradeBucketed, symbol, binSize, startTime, endTime);
     dbConn.query(sql, null, (error, rows, fields) => {
         if (error) {
             console.error(error);
@@ -316,7 +316,7 @@ const ohlcProc = (req, res, next) => {
         const step = cnt / chart.rowCount1;
         const timestampFormat = '%Y-%m-%dT%H:%i:%s.000Z';
 
-        sql = sprintf("SELECT `timestamp`, AVG(`open`) `open`, AVG(`high`) `high`, AVG(`low`) `low`, AVG(`close`) `close` FROM (SELECT FLOOR((@row_number:=@row_number + 1)/%f) AS num, `timestamp`, `open`, `high`, `low`, `close` FROM (SELECT DATE_FORMAT(ADDTIME(STR_TO_DATE(`timestamp`, '%s'), '%s'), '%s') `timestamp`, `open`, `high`, `low`, `close` FROM `%s_%s` WHERE `symbol` = '%s' AND `timestamp` BETWEEN '%s' AND '%s' ORDER BY `timestamp`) `bd`, (SELECT @row_number:=0) `row_num`  ORDER BY `timestamp` ASC) `tmp` GROUP BY `num`;", step, timestampFormat, timeOffset, timestampFormat, dbTblName.tradeBucketed, binSize, symbol, startTime, endTime);
+        sql = sprintf("SELECT `timestamp`, AVG(`open`) `open`, AVG(`high`) `high`, AVG(`low`) `low`, AVG(`close`) `close` FROM (SELECT FLOOR((@row_number:=@row_number + 1)/%f) AS num, `timestamp`, `open`, `high`, `low`, `close` FROM (SELECT DATE_FORMAT(ADDTIME(STR_TO_DATE(`timestamp`, '%s'), '%s'), '%s') `timestamp`, `open`, `high`, `low`, `close` FROM `%s_%s_%s` WHERE `timestamp` BETWEEN '%s' AND '%s' ORDER BY `timestamp`) `bd`, (SELECT @row_number:=0) `row_num`  ORDER BY `timestamp` ASC) `tmp` GROUP BY `num`;", step, timestampFormat, timeOffset, timestampFormat, dbTblName.tradeBucketed, symbol, binSize, startTime, endTime);
         dbConn.query(sql, null, (error, rows, fields) => {
             if (error) {
                 console.error(error);
