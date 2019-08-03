@@ -1,7 +1,7 @@
 import express from 'express';
 import {sprintf} from 'sprintf-js';
 import dbConn from '../../core/dbConn';
-import {dbTblName, chart} from '../../core/config';
+import {dbTblName, chart, server} from '../../core/config';
 import strings from '../../core/strings';
 
 const router = express.Router();
@@ -14,8 +14,16 @@ const realProc = (req, res, next) => {
     let endTime = params.endTime;
     const timezone = params.timezone;
 
-    const acceptBinSize = ['5m', '1h'];
-    if (acceptBinSize.indexOf(binSize) === -1) {
+    const acceptSymbols = server.acceptSymbols;
+    const acceptBinSize = ['1m', '5m', '1h'];
+
+    if (acceptSymbols.indexOf(symbol) === -1) {
+        res.status(200).send({
+            result: strings.error,
+            message: strings.symbolIsInvalid,
+        });
+        return;
+    } else if (acceptBinSize.indexOf(binSize) === -1) {
         res.status(200).send({
             result: strings.error,
             message: strings.binSizeIsInvalid,
