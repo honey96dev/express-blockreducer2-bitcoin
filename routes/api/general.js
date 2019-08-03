@@ -124,7 +124,7 @@ const volume1Proc = (req, res, next) => {
         const timestampFormat = "%Y-%m-%dT%H:%i:%s.000Z";
 
         let step = parseInt(rows[0]['cnt']) / chart.rowCount1;
-        sql = sprintf("SELECT `timestamp`, SUM(`volume`) `volume`, AVG(`open`) `open`, AVG(`vwap_seed`) `vwap_seed`, AVG(`num_3`) `num_3`, AVG(`num_6`) `num_6`, AVG(`num_9`) `num_9`, AVG(`num_100`) `num_100` FROM (SELECT (SELECT FLOOR((@row_num:=@row_num+1) / %f)) `row_num`, tmp.* FROM (SELECT DATE_FORMAT(ADDTIME(STR_TO_DATE(V.timestamp, '%s'), '%s'), '%s') `timestamp`, IFNULL(V.volume, 0) `volume`, IFNULL(B.open, 0) `open`, IFNULL(W.vwap_seed, 1) `vwap_seed`, IFNULL(I.num_3, 0) `num_3`, IFNULL(I.num_6, 0) `num_6`, IFNULL(I.num_9, 0) `num_9`, IFNULL(I.num_100, 0) `num_100` FROM `%s_%s` V LEFT JOIN `%s_%s` B ON B.symbol = '%s' AND B.timestamp = V.timestamp LEFT JOIN `%s_%s` W ON W.timestamp = V.timestamp LEFT JOIN `%s_%s` I ON I.timestamp = V.timestamp WHERE V.timestamp BETWEEN '%s' AND '%s' ORDER BY `timestamp`) `tmp`, (SELECT @row_num := 0) `rnum`) `final` GROUP BY `row_num` ORDER BY `timestamp`;", step, timestampFormat, timeOffset, timestampFormat, dbTblName.volume, binSize, dbTblName.tradeBucketed, binSize, symbol, dbTblName.vwap, binSize, dbTblName.id0, binSize, startTime, endTime);
+        sql = sprintf("SELECT `timestamp`, SUM(`volume`) `volume`, AVG(`open`) `open`, AVG(`vwap_seed`) `vwap_seed`, AVG(`num_3`) `num_3`, AVG(`num_6`) `num_6`, AVG(`num_9`) `num_9`, AVG(`num_100`) `num_100` FROM (SELECT (SELECT FLOOR((@row_num:=@row_num+1) / %f)) `row_num`, tmp.* FROM (SELECT DATE_FORMAT(ADDTIME(STR_TO_DATE(V.timestamp, '%s'), '%s'), '%s') `timestamp`, IFNULL(V.volume, 0) `volume`, IFNULL(B.open, 0) `open`, IFNULL(W.vwap_seed, 1) `vwap_seed`, IFNULL(I.num_3, 0) `num_3`, IFNULL(I.num_6, 0) `num_6`, IFNULL(I.num_9, 0) `num_9`, IFNULL(I.num_100, 0) `num_100` FROM `%s_%s` V LEFT JOIN `%s_%s_%s` B ON B.timestamp = V.timestamp LEFT JOIN `%s_%s` W ON W.timestamp = V.timestamp LEFT JOIN `%s_%s` I ON I.timestamp = V.timestamp WHERE V.timestamp BETWEEN '%s' AND '%s' ORDER BY `timestamp`) `tmp`, (SELECT @row_num := 0) `rnum`) `final` GROUP BY `row_num` ORDER BY `timestamp`;", step, timestampFormat, timeOffset, timestampFormat, dbTblName.volume, binSize, dbTblName.tradeBucketed, symbol, binSize, dbTblName.vwap, binSize, dbTblName.id0, binSize, startTime, endTime);
         dbConn.query(sql, null, (error, results, fields) => {
             if (error) {
                 console.error(error);
@@ -213,7 +213,7 @@ const volume2Proc = (req, res, next) => {
     startTime = new Date(startTime).toISOString();
     endTime = new Date(endTime).toISOString();
 
-    let sql = sprintf("SELECT COUNT(`timestamp`) `cnt` FROM (SELECT I.timestamp, I.openInterest, I.openValue, IFNULL(B.open, 0) `open` FROM `%s_%s` I LEFT JOIN `%s_%s` B ON B.symbol = '%s' AND B.timestamp = I.timestamp WHERE I.timestamp BETWEEN '%s' AND '%s') `tmp`", dbTblName.interestedNValue, binSize, dbTblName.tradeBucketed, binSize, symbol, startTime, endTime);
+    let sql = sprintf("SELECT COUNT(`timestamp`) `cnt` FROM (SELECT I.timestamp, I.openInterest, I.openValue, IFNULL(B.open, 0) `open` FROM `%s_%s` I LEFT JOIN `%s_%s_%s` B ON B.timestamp = I.timestamp WHERE I.timestamp BETWEEN '%s' AND '%s') `tmp`", dbTblName.interestedNValue, binSize, dbTblName.tradeBucketed, symbol, binSize, startTime, endTime);
     dbConn.query(sql, undefined, (error, results, fields) => {
         if (error) {
             console.error(error);
@@ -227,7 +227,7 @@ const volume2Proc = (req, res, next) => {
         const timestampFormat = "%Y-%m-%dT%H:%i:%s.000Z";
 
         let step = parseInt(results[0]['cnt']) / chart.rowCount1;
-        sql = sprintf("SELECT `timestamp`, AVG(`openInterest`) `openInterest`, AVG(`openValue`) `openValue`, AVG(`open`) `open` FROM (SELECT tmp.*, FLOOR((SELECT @row_num:=@row_num+1) / %f) `row_num` FROM (SELECT DATE_FORMAT(ADDTIME(STR_TO_DATE(I.timestamp, '%s'), '%s'), '%s') `timestamp`, I.openInterest, I.openValue, IFNULL(B.open, 0) `open` FROM `%s_%s` I LEFT JOIN `%s_%s` B ON B.symbol = '%s' AND B.timestamp = I.timestamp WHERE I.timestamp BETWEEN '%s' AND '%s') `tmp`, (SELECT @row_num:=0) `rnum`) `final` GROUP BY `row_num` ORDER BY `timestamp` ASC;", step, timestampFormat, timeOffset, timestampFormat, dbTblName.interestedNValue, binSize, dbTblName.tradeBucketed, binSize, symbol, startTime, endTime);
+        sql = sprintf("SELECT `timestamp`, AVG(`openInterest`) `openInterest`, AVG(`openValue`) `openValue`, AVG(`open`) `open` FROM (SELECT tmp.*, FLOOR((SELECT @row_num:=@row_num+1) / %f) `row_num` FROM (SELECT DATE_FORMAT(ADDTIME(STR_TO_DATE(I.timestamp, '%s'), '%s'), '%s') `timestamp`, I.openInterest, I.openValue, IFNULL(B.open, 0) `open` FROM `%s_%s` I LEFT JOIN `%s_%s_%s` B ON B.timestamp = I.timestamp WHERE I.timestamp BETWEEN '%s' AND '%s') `tmp`, (SELECT @row_num:=0) `rnum`) `final` GROUP BY `row_num` ORDER BY `timestamp` ASC;", step, timestampFormat, timeOffset, timestampFormat, dbTblName.interestedNValue, binSize, dbTblName.tradeBucketed, symbol, binSize, startTime, endTime);
         dbConn.query(sql, null, (error, results, fields) => {
             if (error) {
                 console.log(error);
