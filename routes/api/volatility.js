@@ -14,7 +14,7 @@ const realProc = (req, res, next) => {
     let endTime = params.endTime;
     const timezone = params.timezone;
 
-    const acceptBinSize = ['1m', '5m', '1h'];
+    const acceptBinSize = ['5m', '1h'];
     if (acceptBinSize.indexOf(binSize) === -1) {
         res.status(200).send({
             result: strings.error,
