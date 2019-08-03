@@ -12,6 +12,7 @@ module.exports = {
         // sslCA: './sslcert/alphasslrootcabundle.crt',
         environment: 'development',
         invitationCode: '23900',
+        pingInterval: 30 * 1000,
     },
     mysql: {
         connectionLimit: 10,
@@ -28,6 +29,7 @@ module.exports = {
     },
     dbTblName: {
         users: 'users',
+        settings: 'settings',
 
         tradeBucketed: 'trade_bucketed',
         tradeBucketed1m: 'trade_bucketed_1m',
@@ -49,10 +51,12 @@ module.exports = {
         volume5m: 'volume_5m',
         volume1h: 'volume_1h',
 
+        vwap: 'vwap',
         vwap1m: 'vwap_1m',
         vwap5m: 'vwap_5m',
         vwap1h: 'vwap_1h',
 
+        interestedNValue: 'interested_n_value',
         interestedNValue1m: 'interested_n_value_1m',
         interestedNValue5m: 'interested_n_value_5m',
         interestedNValue1h: 'interested_n_value_1h',
