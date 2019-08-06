@@ -1,6 +1,7 @@
 import express from 'express';
 import strings from "../../core/strings";
 import dbConn from '../../core/dbConn';
+import {server} from '../../core/config';
 const router = express.Router();
 
 const currentSymbolPostProc = (req, res, next) => {
@@ -8,7 +9,7 @@ const currentSymbolPostProc = (req, res, next) => {
   const userId = params.userId;
   const symbol = params.symbol;
 
-  const acceptSymbol = ['XBTUSD', 'tETHUSD', 'tBCHUSD', 'tEOSUSD', 'tLTCUSD', 'tBSVUSD'];
+  const acceptSymbol = server.acceptSymbols;
   if (acceptSymbol.indexOf(symbol) === -1) {
     res.status(200).send({
       result: strings.error,
