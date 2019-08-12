@@ -2,7 +2,7 @@ module.exports = {
     server: {
         isDev: false,
         port: 80,
-        baseUrl: 'http://127.0.0.1:80/',
+        baseUrl: 'http://blockreducer.com/',
         name: 'Block Reducer2',
         description: 'Block Reducer2',
         author: 'Zhenlong J.',
@@ -13,12 +13,13 @@ module.exports = {
         environment: 'development',
         invitationCode: '23900',
         pingInterval: 30 * 1000,
+        acceptSymbols: ['XBTUSD', 'tETHUSD', 'tBABUSD', 'tEOSUSD', 'tLTCUSD', 'tBSVUSD'],
     },
     mysql: {
         connectionLimit: 10,
-        host: '127.0.0.1',
-        user: 'root',
-        password: '',
+        host: '108.61.186.24',
+        user: 'bitmex3536',
+        password: 'BitMex*95645636',
         database: 'blockreducer2',
         port: 3306
     },
