@@ -65,6 +65,8 @@ module.exports = {
         deribitInstruments2: 'deribit_instruments2',
 
         cryptoMarkets: 'crypto_markets',
+
+        fftFixTask: 'fft_fix_task',
     },
 
     chart: {

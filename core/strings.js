@@ -24,4 +24,6 @@ module.exports = {
     timezoneIsInvalid: 'Timezone is invalid',
     thisEmailIsAlreadyUsed: 'This email is already used',
     symbolIsInvalid: 'Symbol is invalid',
+    recalculationIsAlreadyBeingPerformed: 'Recalculation is already being performed',
+    successfullyRequested: 'Successfully requested',
 };
