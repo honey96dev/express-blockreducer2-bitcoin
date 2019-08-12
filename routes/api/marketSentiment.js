@@ -28,7 +28,7 @@ const oneProc = (req, res, next) => {
     return;
   }
 
-  let sql = sprintf("SELECT * FROM `%s_%s_%s` WHERE `symbol` = '%s' ORDER BY `timestamp` DESC LIMIT 1", dbTblName.id0, symbol, binSize);
+  let sql = sprintf("SELECT * FROM `%s_%s_%s` ORDER BY `timestamp` DESC LIMIT 1", dbTblName.id0, symbol, binSize);
   dbConn.query(sql, null, (error, rows, fields) => {
     if (error) {
       console.error(error);
