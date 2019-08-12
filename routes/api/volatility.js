@@ -120,6 +120,7 @@ const recalculateProc = (req, res, next) => {
   let sql = `SELECT * FROM \`${dbTblName.fftFixTask}\` WHERE \`symbol\` = '${symbol}' AND \`binSize\` = '${binSize}' AND \`startTime\` = '${startTime}' AND \`endTime\` = '${endTime}' AND \`performed\` = '0';`;
   dbConn.query(sql, null, (error, result, fields) => {
     if (error) {
+      console.error(error);
       res.status(200).send({
         result: strings.error,
         message: strings.unknownServerError,
@@ -138,6 +139,7 @@ const recalculateProc = (req, res, next) => {
     sql = sprintf("INSERT INTO `fft_fix_task`(`symbol`, `binSize`, `startTime`, `endTime`, `performed`) values('%s', '%s', '%s', '%s', '%d');", symbol, binSize, startTime, endTime, 0);
     dbConn.query(sql, null, (error, result, fields) => {
       if (error) {
+        console.error(error);
         res.status(200).send({
           result: strings.error,
           message: strings.unknownServerError,
