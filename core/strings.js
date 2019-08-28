@@ -26,4 +26,7 @@ module.exports = {
     symbolIsInvalid: 'Symbol is invalid',
     recalculationIsAlreadyBeingPerformed: 'Recalculation is already being performed',
     successfullyRequested: 'Successfully requested',
+    startPriceIsInvalid: 'Start Price is invalid',
+    endPriceIsInvalid: 'End Price is invalid',
+    stepIsInvalid: 'Step is invalid',
 };

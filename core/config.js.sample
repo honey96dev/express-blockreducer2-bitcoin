@@ -67,6 +67,11 @@ module.exports = {
 
         cryptoMarkets: 'crypto_markets',
 
+        footprint: 'footprint',
+        footprint1m: 'footprint_1m',
+        footprint5m: 'footprint_5m',
+        footprint1h: 'footprint_1h',
+
         fftFixTask: 'fft_fix_task',
     },
 

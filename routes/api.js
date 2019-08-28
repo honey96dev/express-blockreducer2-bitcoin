@@ -7,6 +7,7 @@ import volatilityRouter from './api/volatility';
 import marketSentimentRouter from './api/marketSentiment';
 import exchangeInfoRouter from './api/exchangeInfo';
 import deribitRouter from './api/deribit';
+import footprintRouter from './api/footprint';
 import settingsRouter from './api/settings';
 
 import adminRouter from './api/admin';
@@ -21,6 +22,7 @@ router.use('/volatility', volatilityRouter);
 router.use('/market-sentiment', marketSentimentRouter);
 router.use('/exchange-info', exchangeInfoRouter);
 router.use('/deribit', deribitRouter);
+router.use('/footprint', footprintRouter);
 router.use('/settings', settingsRouter);
 
 router.use('/admin', adminRouter);
