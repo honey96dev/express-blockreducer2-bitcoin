@@ -60,7 +60,7 @@ const indexProc = (req, res, next) => {
     endTime = new Date().toISOString();
   }
   if (typeof startTime === 'undefined' || startTime == null || startTime === 'null') {
-    startTime = new Date(new Date(endTime).getTime() - 30 * 24 * 3600 * 1000).toISOString();
+    startTime = new Date(new Date(endTime).getTime() - 24 * 3600 * 1000).toISOString();
   }
   startTime = new Date(startTime).toISOString();
   endTime = new Date(endTime).toISOString();
