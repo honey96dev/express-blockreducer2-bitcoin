@@ -16,7 +16,8 @@ const indexProc = (req, res, next) => {
   let endPrice = parseFloat(params.endPrice);
   let step = parseFloat(params.step);
 
-  const acceptSymbols = server.acceptSymbols;
+  let acceptSymbols = server.acceptSymbols;
+  acceptSymbols.push('BTCUSD');
   // const acceptBinSize = ['1m', '5m', '1h'];
   const acceptBinSize = ['5m'];
 
